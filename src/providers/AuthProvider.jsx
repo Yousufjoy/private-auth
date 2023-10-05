@@ -11,21 +11,26 @@ import auth from "../firebase.config";
 export const AuthContext = createContext(null);
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const createUser = (email, password) => {
+    setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
   const signInUser = (email, password) => {
+    setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
 
   const logOut = () => {
+    setLoading(true);
     return signOut(auth);
   };
 
   const authInfo = {
     user,
+    loading,
     createUser,
     signInUser,
     logOut,
@@ -40,6 +45,7 @@ const AuthProvider = ({ children }) => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       // currentUser ekta function jeta hocche jokhon kono kisu change hobe tokhon ei function ta k call korbe
       setUser(currentUser);
+      setLoading(false);
       console.log(
         "Observing current User inside useEffect of auth provider",
         currentUser

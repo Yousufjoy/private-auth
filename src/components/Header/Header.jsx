@@ -31,6 +31,11 @@ const Header = () => {
               </NavLink>
             </li>
             <li>
+              <NavLink to="/orders">
+                <a className="text-blue-700">Orders</a>
+              </NavLink>
+            </li>
+            <li>
               <NavLink to="/login">
                 <a className="text-blue-700">Login</a>
               </NavLink>
@@ -40,6 +45,7 @@ const Header = () => {
                 <a className="text-blue-700">Register</a>
               </NavLink>
             </li>
+
             <li>
               {user ? (
                 <>
@@ -52,9 +58,7 @@ const Header = () => {
                   </button>
                 </>
               ) : (
-                <Link to="/login">
-                  <button>Log in</button>
-                </Link>
+                <Link to="/login"></Link>
               )}
             </li>
           </ul>
