@@ -15,7 +15,6 @@ const Register = () => {
     console.log(userName, email, password);
 
     // create user in fireBase
-
     createUser(email, password)
       .then((result) => {
         console.log(result.user);
