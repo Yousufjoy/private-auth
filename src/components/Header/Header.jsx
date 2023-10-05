@@ -1,6 +1,20 @@
-import { NavLink } from "react-router-dom";
+import { useContext } from "react";
+import { NavLink, Link } from "react-router-dom";
+import { AuthContext } from "../../providers/AuthProvider";
 
 const Header = () => {
+  const { user, logOut } = useContext(AuthContext);
+
+  const handleLogout = () => {
+    logOut()
+      .then(() => {
+        console.log("User Logged Out");
+      })
+      .then((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <div>
       <div className="flex items-center ">
@@ -25,6 +39,23 @@ const Header = () => {
               <NavLink to="/register">
                 <a className="text-blue-700">Register</a>
               </NavLink>
+            </li>
+            <li>
+              {user ? (
+                <>
+                  <span className="mx-4">{user.email}</span>
+                  <button
+                    className=" bg-blue-400 text-white"
+                    onClick={handleLogout}
+                  >
+                    Sign out
+                  </button>
+                </>
+              ) : (
+                <Link to="/login">
+                  <button>Log in</button>
+                </Link>
+              )}
             </li>
           </ul>
         </div>
