@@ -1,14 +1,18 @@
 import { createContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import {
+  GoogleAuthProvider,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  signInWithPopup,
   signOut,
 } from "firebase/auth";
 import auth from "../firebase.config";
 
 export const AuthContext = createContext(null);
+
+const googleprovider = new GoogleAuthProvider();
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -23,6 +27,11 @@ const AuthProvider = ({ children }) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
 
+  const signInWithGoogle = () => {
+    setLoading(true);
+    return signInWithPopup(auth, googleprovider);
+  };
+
   const logOut = () => {
     setLoading(true);
     return signOut(auth);
@@ -34,6 +43,7 @@ const AuthProvider = ({ children }) => {
     createUser,
     signInUser,
     logOut,
+    signInWithGoogle,
   }; // Eita create korar karon hocche overall application e jeno sobai access korte pare
 
   // Ekhane useEffect use kortesi karon observe korbo j kotokhon user login thaktese or logut hoye jacche kotokhon por page reload dilo etc ekhane basically state k dhore rakhtese log out na hole state ta k dhore rakhtese j user ta ase kina!!

@@ -1,8 +1,10 @@
 import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const { signInUser } = useContext(AuthContext);
+  const { signInUser, signInWithGoogle } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleLoginSubmit = (e) => {
     e.preventDefault();
@@ -13,6 +15,20 @@ const Login = () => {
     // Sign in in fireBase
 
     signInUser(email, password)
+      .then((result) => {
+        e.target.reset();
+        navigate("/");
+        console.log(result.user);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    // Google sign in
+  };
+
+  const handleGoogleSignIn = () => {
+    signInWithGoogle()
       .then((result) => {
         console.log(result.user);
       })
@@ -63,9 +79,11 @@ const Login = () => {
                 Login
               </button>
             </form>
-            <a className="text-blue-700 text-center text-sm" href="/login">
-              Forgot password?
-            </a>
+            <p>
+              <button onClick={handleGoogleSignIn} className=" btn btn-primary">
+                Google Login
+              </button>
+            </p>
           </div>
         </div>
       </body>
