@@ -1,4 +1,11 @@
 const Login = () => {
+  const handleLoginSubmit = (e) => {
+    e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    console.log(email, password);
+  };
+
   return (
     <div>
       <body className="antialiased bg-gray-200 text-gray-900 font-sans">
@@ -7,10 +14,15 @@ const Login = () => {
             <span className="block w-full text-xl uppercase font-bold mb-4">
               Login
             </span>
-            <form className="mb-4" action="/" method="post">
+            <form
+              onSubmit={handleLoginSubmit}
+              className="mb-4"
+              action="/"
+              method="post"
+            >
               <div className="mb-4 md:w-full">
                 <label htmlFor="email" className="block text-xs mb-1">
-                  Username or Email
+                  Email
                 </label>
                 <input
                   className="w-full border rounded p-2 outline-none focus:shadow-outline"
